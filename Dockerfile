@@ -48,10 +48,17 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install packaging
 RUN pip install torch==2.2.1
+# mamba-ssm and causal-conv1d compile CUDA extensions that require torch at build time.
+# --no-build-isolation lets them see the already-installed torch instead of an empty sandbox.
+RUN pip install causal-conv1d==1.2.0.post2 --no-build-isolation
+RUN pip install mamba-ssm==1.2.0.post1 --no-build-isolation
 RUN pip install -r requirements.txt
  
 # Add your code to the container
 COPY . .
- 
+
+# Source code lives in src/; run train.py and eval.py from there
+WORKDIR /app/src
+
 # Expose ports (if needed, for example for tensorboard)
 EXPOSE 6006

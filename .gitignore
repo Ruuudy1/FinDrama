@@ -4,8 +4,10 @@ __pycache__/
 ckpt/
 runs/
 .ipynb_checkpoints
-wandb/
+wandb*/
 test/
 saved_models/
 backup/
 config.yaml
+checkpoints/
+*.tar.gz
